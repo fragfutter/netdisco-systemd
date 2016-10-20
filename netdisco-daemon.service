@@ -1,0 +1,16 @@
+[Unit]
+Description=Netdisco Poller Daemon
+After=network.target
+
+[Service]
+User=netdisco
+Environment=NETDISCO_HOME=/opt/netdisco
+Environment=PERL5LIB=/opt/netdisco/lib/perl5/
+# and now allow overloading them from file
+EnvironmentFile=/etc/sysconfig/netdisco
+WorkingDirectory=/opt/netdisco/
+ExecStart=/opt/netdisco/bin/netdisco-daemon-fg
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
